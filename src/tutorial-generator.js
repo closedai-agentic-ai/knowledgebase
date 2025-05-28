@@ -19,15 +19,11 @@ class TutorialGenerator {
         repoInfo,
         fileStructure
       );
-
-      // const markdownContent = this._generateMarkdownTutorial(tutorialData);
       return tutorialData;
     } catch (error) {
       throw new Error(`Tutorial generation failed: ${error.message}`);
     }
   }
-
-  async _generateMarkdownTutorialFromLLM(tutorialData) {}
 
   async saveTutorialFiles(tutorialContent, outputDir, repoName) {
     try {
@@ -78,6 +74,8 @@ class TutorialGenerator {
         complexity_level: overview.complexity_level || "Unknown",
         complexity_reasoning: overview.complexity_reasoning || "",
         flows: overview.flows || {},
+        apk_name: overview.apk_name || "Unknown",
+        android_package: overview.android_package || "Unknown",
       },
       structure: {
         total_files: fileStructure.total_files || 0,
