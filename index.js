@@ -52,8 +52,8 @@ exports.handler = async (event, context) => {
 
     console.log("📖 Reading file contents...");
     const fileContents = {};
-    for (const filePath of mainFiles.slice(0, 10)) {
-      const content = await githubClient.readFileContent(filePath, 30000);
+    for (const filePath of mainFiles.slice(0, 50)) {
+      const content = await githubClient.readFileContent(filePath, 50000);
       if (content) fileContents[filePath] = content;
     }
 
@@ -65,7 +65,6 @@ exports.handler = async (event, context) => {
       fileContents
     );
 
-    console.log("📝 Generating tutorial...");
     const content = tutorialGenerator.generateTutorial(
       analysisResults,
       repoInfo,

@@ -274,7 +274,15 @@ class GitHubClient {
 
     // High importance files
     if (["readme.md", "readme.txt", "readme"].includes(fileName)) return 100;
-    if (["package.json", "requirements.txt", "setup.py"].includes(fileName))
+    if (
+      [
+        "package.json",
+        "requirements.txt",
+        "setup.py",
+        "app.json",
+        "eas.json",
+      ].includes(fileName)
+    )
       return 90;
     if (["index.js", "main.py", "app.py", "server.js"].includes(fileName))
       return 80;

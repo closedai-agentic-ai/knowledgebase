@@ -31,7 +31,7 @@ ${JSON.stringify(data, null, 2)}
 Use This Structure in the Markdown:
 
 # Project Title & Repository Info
-Include repository name, owner, GitHub URL, and generation date.
+Include repository name, owner, GitHub URL, apk_name, android.package, and generation date
 
 ## Overview
 Purpose, target audience, architecture type, complexity level with explanation, and brief intro to core functionality.
@@ -124,25 +124,36 @@ Avoid repetition and unnecessary verbosity.
   }
 
   async _analyzeOverview(repoInfo, fileStructure, fileContents) {
-    const prompt = `Analyze this repository and provide:
-1. Purpose and main functionality, keep it detailed and concise include what the app is about, what all it has
-2. Technology stack used
-3. Architecture type (web app, library, CLI tool, etc.)
-4. Target audience (developers, end-users, etc.)
-5. Complexity level (beginner, intermediate, advanced)
-6. What major features it has, how they work and what is the flow to these features and what actions are taken in each flow, be specific to features and app flows, explain in details minimum 4 lines for each feature and flow
+    const prompt = `Analyze the following software repository in depth and respond in a structured JSON format. Your analysis should be based on the code files, project configuration, and any manifest-like content (especially app.json) provided. Specifically, determine the name of the APK from the app.json file if applicable (e.g., if it's an Expo or React Native app).
+Your response must include the following keys with clearly written and well-explained content:
+purpose – Describe the overall purpose and primary functionality of the application. Explain what the app is about, the problems it solves, and what features it includes. Be thorough and specific.
+technology_stack – List the technologies, frameworks, and programming languages used in the project.
+architecture_type – Define the type of software architecture (e.g., web application, mobile application, command-line tool, software library, etc.).
+target_audience – Identify who the application is meant for (e.g., developers, general users, system administrators, etc.).
+complexity_level – Classify the project as beginner, intermediate, or advanced in terms of development complexity.
+complexity_reasoning – Provide reasoning for the chosen complexity level, based on the code structure, use of libraries, patterns, and feature implementation.
+apk_name – If available, extract the name of the APK or application from app.json (e.g., from expo.name or expo.slug).
+flows – For each major feature in the application, provide the following:
 
-Repository: ${repoInfo.name}
-Files: ${fileStructure.total_files}
-Languages: ${Object.keys(fileStructure.languages).join(", ")}
+Feature name
+Description of the feature’s functionality
+Step-by-step breakdown of the user or system flow through this feature (minimum 4 lines of explanation per feature)
+Specific actions and interactions that occur in the flow, including UI or backend processes if applicable
 
-Key files content:
+Repository metadata:
+Repository name: ${repoInfo.name}
+Total files: ${fileStructure.total_files}
+Languages used: ${Object.keys(fileStructure.languages).join(", ")}
+apk_name: 
+android.package 
+
+Key file content (partial excerpts):
 ${Object.entries(fileContents)
   .slice(0, 3)
   .map(([path, content]) => `${path}:\n${content.substring(0, 1000)}`)
   .join("\n\n")}
-
-Respond in JSON format with keys: purpose, technology_stack, architecture_type, target_audience, complexity_level, complexity_reasoning, flows`;
+Make sure your analysis is comprehensive, accurate, and structured for clarity. Respond only in the required JSON format.
+`;
 
     const response = await this._invokeBedrock(prompt);
     return this._parseJsonResponse(response);
