@@ -1,0 +1,39 @@
+{
+  "name": "autotutor-nodejs",
+  "version": "1.0.0",
+  "description": "Git-to-Tutorial AI Generator using AWS Bedrock - Node.js version",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "build": "npm install --production",
+    "package": "npm run build && zip -r autotutor-nodejs.zip . -x '*.git*' 'node_modules/.cache/*' 'test/*'"
+  },
+  "keywords": [
+    "aws",
+    "bedrock",
+    "github",
+    "tutorial",
+    "ai",
+    "lambda",
+    "nodejs"
+  ],
+  "author": "AutoTutor",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.490.0",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "simple-git": "^3.20.0",
+    "handlebars": "^4.7.8",
+    "ignore": "^5.3.0",
+    "fs-extra": "^11.2.0",
+    "tmp": "^0.2.1",
+    "mime-types": "^2.1.35"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
